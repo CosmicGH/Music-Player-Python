@@ -27,7 +27,7 @@ class MusicPlayer:
         if file_path:
             self.audio_file = file_path
             file_name = os.path.basename(file_path)
-            song = tk.Button(root, text=file_name, command=lambda: pygame.mixer.music.load(file_path))
+            song = tk.Button(root, text=file_name, command=lambda: (pygame.mixer.music.load(file_path), pygame.mixer.music.play()))
             song.pack()
             pygame.mixer.music.load(self.audio_file)
 
