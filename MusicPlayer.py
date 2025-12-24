@@ -1,6 +1,7 @@
 import tkinter as tk
-from tkinter import filedialog, Listbox
+from tkinter import filedialog
 import pygame
+import os
 
 pygame.mixer.init() # Initialize Pygame mixer
 
@@ -32,6 +33,10 @@ class MusicPlayer:
         if file_path:
             self.audio_file = file_path
             self.play_button.config(state=tk.NORMAL)
+            # Displays the selected file name
+            file_name = os.path.basename(file_path)
+            label = tk.Label(root, text=file_name)
+            label.pack(pady=20)
 
     def play_audio(self):
         pygame.mixer.music.load(self.audio_file)
