@@ -18,27 +18,25 @@ class MusicPlayer:
         self.open_button.pack(padx=10, pady=10, anchor='ne')
         self.play_pause_button.pack(side=tk.BOTTOM, pady=10)
 
-        self.playlist = []
-
         pygame.mixer.init() # Initialize pygame
 
         root.protocol("WM_DELETE_WINDOW", self.on_closing) # Register a callback to stop audio when the window is closed
-
-        self.paused = True # Initialize playback state
 
     def open_audio(self):
         file_path = filedialog.askopenfilename(filetypes=[("Audio Files", "*.flac *.mp3 *.wav")])
         if file_path:
             self.audio_file = file_path
             file_name = os.path.basename(file_path)
-            song = tk.Button(root, text=file_name)
+            song = tk.Button(root, text=file_name, command=lambda: pygame.mixer.music.load(file_path))
             song.pack()
-            self.playlist.append(file_path)
             pygame.mixer.music.load(self.audio_file)
 
     def play_pause_audio(self):
-        if not pygame.mixer.music.get_busy() and not self.paused:
+        self.paused = False # Initialize playback state
+        if not pygame.mixer.music.get_busy():
             pygame.mixer.music.play()
+            pygame.mixer.music.unpause()
+            self.paused = False
         elif self.paused:
             pygame.mixer.music.unpause()
             self.paused = False
