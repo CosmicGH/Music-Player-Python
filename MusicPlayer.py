@@ -11,16 +11,20 @@ class MusicPlayer:
         self.root.title("Music Player")
         self.root.geometry("1920x1045")
 
-        # Create buttons for opening & playing/pausing audio files
-        self.open_button = tk.Button(root, text="+", command=self.open_audio)
-        self.play_pause_button = tk.Button(root, text="Play/Pause", state=tk.NORMAL, command=self.play_pause_audio)
-
-        self.open_button.pack(padx=10, pady=10, anchor='ne')
-        self.play_pause_button.pack(side=tk.BOTTOM, pady=10)
-
         pygame.mixer.init() # Initialize pygame
 
         root.protocol("WM_DELETE_WINDOW", self.on_closing) # Register a callback to stop audio when the window is closed
+
+        # Create sidebar frame
+        self.sidebar = tk.Frame(root, width=200, bg='grey')
+        self.sidebar.pack(side=tk.LEFT, fill=tk.Y)
+
+        # Create buttons for opening & playing/pausing audio files
+        self.open_button = tk.Button(root, text="+", command=self.open_audio)
+        self.open_button.pack(padx=10, pady=10, anchor='ne')
+
+        self.play_pause_button = tk.Button(root, text="Play/Pause", state=tk.NORMAL, command=self.play_pause_audio)
+        self.play_pause_button.pack(side=tk.BOTTOM, pady=10)
 
     def open_audio(self):
         file_path = filedialog.askopenfilename(filetypes=[("Audio Files", "*.flac *.mp3 *.wav")])
